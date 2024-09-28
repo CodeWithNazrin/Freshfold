@@ -1,17 +1,17 @@
 <?php
 include('./includes/adminnavbar.php'); // Including the admin navbar
 
-if (isset($_POST['adminlogin'])) {
+if (isset($_POST['stafflogin'])) {
     $userid = $_POST['userid'];
     $password = $_POST['password'];
-    $check = $conn->query("SELECT `userid`, `password` FROM `admin` WHERE userid='$userid' and password='$password'");
+    $check = $conn->query("SELECT `userid`, `password` FROM `staff` WHERE userid='$userid' and password='$password'");
 
     if ($check->num_rows > 0) {
         echo "<script> alert('user exist');</script>";
         while($r=mysqli_fetch_array(result:$check))
         $_SESSION['user_id'] = $userid;
-        $_SESSION['role'] = "admin";
-        header("location:adminpanel.php");
+        $_SESSION['role'] = "staff";
+        header("location:staffpanel.php");
     } else {
         echo "<script>alert('Invalid UserID or Password')</script>";
     }
@@ -75,7 +75,7 @@ if (isset($_POST['adminlogin'])) {
 </style>
 
 <div class="container">
-    <h2>Admin Login</h2>
+    <h2>Staff Login</h2>
     <form action="" method="post">
         <div class="mb-3">
             <label for="userid" class="form-label">User ID</label>
@@ -85,7 +85,7 @@ if (isset($_POST['adminlogin'])) {
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary" name="adminlogin">Login</button>
+        <button type="submit" class="btn btn-primary" name="stafflogin">Login</button>
     </form>
 </div>
 

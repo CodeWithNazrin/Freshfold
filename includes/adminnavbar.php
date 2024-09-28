@@ -24,17 +24,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <?php
+                // Check if 'role' is set in the session
+                if (isset($_SESSION['role'])) {
+                    if ($_SESSION['role'] == 'staff') {
+                        // Staff Dashboard Link
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="staffpanel.php"> Dashboard</a>
+                              </li>';
+                    } elseif ($_SESSION['role'] == 'admin') {
+                        // Admin Dashboard Link
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="adminpanel.php"> Dashboard</a>
+                              </li>';
+                    }
+                }
+                ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="adminpanel.php">Dashboard</a>
+                    <a class="nav-link" href="logout.php">Logout</a>
                 </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                </li>
-              
             </ul>
         </div>
     </div>
 </nav>
-
-

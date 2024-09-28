@@ -1,24 +1,31 @@
 <?php
-include('./includes/adminnavbar.php');
+include ('./includes/navbar.php');
+
 if (isset($_POST["update"])) {
-    $id = $_POST['update'];
+    $id = $_POST['id'];
     $userid = $_POST['userid'];
     $categoryid = $_POST['categoryid'];
     $date = $_POST['date'];
     $status = $_POST['status'];
-    $update = $conn->query("UPDATE `booking` SET `categoryid`='$categoryid', `date`='$date', `status`='$status' WHERE `id` ='$id'");
+    $update = $conn->query("UPDATE `booking` SET `userid`='$userid', `categoryid`='$categoryid', `date`='$date', `status`='$status' WHERE `id`='$id'");
+    if (!$update) {
+        echo "<div class='alert alert-danger'>Error: " . mysqli_error($conn) . "</div>";
+    } else {
+        echo "<div class='alert alert-success'>Booking updated successfully!</div>";
+    }
 }
 
 if (isset($_POST["delete"])) {
     $d = $_POST["delete"];
     $delete = $conn->query("DELETE FROM `booking` WHERE `id`='$d'");
+    echo "<div class='alert alert-danger'>Booking deleted successfully!</div>";
 }
 
 $userid = $_SESSION['user_id'];
-$booking = $conn->query("SELECT * FROM booking");
-
-if ($booking->num_rows > 0) {
+$booking = $conn->query("SELECT * FROM booking WHERE userid = '$userid'");
 ?>
+
+<!-- CSS for the updated booking layout -->
 <style>
     body {
         font-family: 'Arial', sans-serif;
@@ -118,48 +125,44 @@ if ($booking->num_rows > 0) {
     }
 </style>
 
-    <div class="container">
-        <h2>Manage Bookings</h2>
-        <div class="booking-list">
-            <?php
-            while ($r = mysqli_fetch_array($booking)) {
-            ?>
+<div class="container">
+    <h2>My Bookings</h2>
+
+    <div class="booking-list">
+        <?php if ($booking->num_rows > 0) { 
+            while ($r = mysqli_fetch_array($booking)) { ?>
                 <div class="booking-item">
                     <div class="booking-info">
                         <form action="" method="post">
-                            <label for="userid">User ID</label>
-                            <input type="text" name="userid" value="<?php echo $r['userid']; ?>" required>
+                            <!-- Hidden ID field -->
+                            <input type="hidden" name="id" value="<?php echo $r['id']; ?>">
 
-                            <label for="categoryid">Category ID</label>
-                            <input type="text" name="categoryid" value="<?php echo $r['categoryid']; ?>" required>
+                            <label for="categoryid">Category</label>
+                            <input type="text" name="categoryid" value="<?php echo $r['categoryid']; ?>" disabled>
 
                             <label for="date">Date</label>
                             <input type="text" name="date" value="<?php echo $r['date']; ?>" required>
 
                             <label for="status">Status</label>
-                            <input type="text" name="status" value="<?php echo $r['status']; ?>" required>
-
-                            <input type="hidden" name="id" value="<?php echo $r['id']; ?>">
+                            <input type="text" name="status" value="<?php echo $r['status']; ?>" disabled>
+                        </form>
                     </div>
                     <div class="action-buttons">
-                        <button type="submit" class="btn btn-update" name="update" value="<?php echo $r['id']; ?>">UPDATE</button>
+                        <form action="" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-update" name="update" value="<?php echo $r['id']; ?>">UPDATE</button>
                         </form>
                         <form action="" method="post" style="display: inline;">
                             <button type="submit" class="btn btn-delete" name="delete" value="<?php echo $r['id']; ?>">DELETE</button>
                         </form>
                     </div>
                 </div>
-            <?php
-            }
-            ?>
-        </div>
+            <?php } 
+        } else { ?>
+            <div class="alert alert-warning text-center">No bookings found.</div>
+        <?php } ?>
     </div>
-<?php
-} else {
-    echo "<div class='alert alert-warning text-center'>No bookings found.</div>";
-}
-?>
+</div>
 
 <?php
-include('./includes/footer.php');
+include ('./includes/footer.php');
 ?>

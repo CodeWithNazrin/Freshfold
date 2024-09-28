@@ -14,12 +14,11 @@
     $conn = mysqli_connect("localhost", "root", "", "freshfold");
     session_start();
     ?>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">FreshFold</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -33,24 +32,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
                     </li>
-<?php
+                    
+                    <?php
 if(isset($_SESSION['user_id']) )
 {
     ?>
-   <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="category.php">Category</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="viewbookings.php">bookings</a>
+                        <a class="nav-link" href="mybookings.php">My Bookings</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="logout.php">logout</a>
+                        <a class="nav-link" href="logout.php">Logout</a>
                     </li>
                     <li class="nav-item">
                         <img src="<?php echo $_SESSION['photo']; ?>" alt="image" style="width:2rem;height:2rem;border-radius:50px;object-fit:cover">
                     </li>
-               
-    <?php
+<?php
 }
 else
 {
@@ -64,11 +63,11 @@ else
     <?php
 }
 ?>
-                 
-
-                </ul>
-
+            </ul>
             </div>
         </div>
     </nav>
+    <?php
     
+
+

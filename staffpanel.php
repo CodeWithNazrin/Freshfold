@@ -61,11 +61,9 @@ include('./includes/adminnavbar.php');
 </style>
 
 <div class="container">
-    <h2 class="text-center mb-4" style="color: #007bff;">Admin Dashboard</h2>
+    <h2 class="text-center mb-4" style="color: #007bff;">Staff Dashboard</h2>
 
     <div class="card">
-        <a class="btn btn-primary" href="addstaff.php">Add Staff</a>
-        <a class="btn btn-primary" href="viewstaff.php">View Staff</a>
         <a class="btn btn-primary" href="viewuser.php">View Users</a>
         <a class="btn btn-primary" href="viewbookings.php">View Bookings</a>
     </div>
